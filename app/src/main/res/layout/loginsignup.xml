@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="10dip"
+    android:background="#24313c">
+
+    <TextView
+        android:id="@+id/txtusername"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Username"
+        android:textColor="#fff" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:textColor="#fff"
+        android:textColorHint="#fff"
+        android:textColorLink="#fff"
+        android:textColorHighlight="#fff"
+        android:layout_below="@+id/txtusername"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/txtpassword"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Password"
+        android:textColor="#fff"
+        android:layout_below="@+id/username"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:textColor="#fff"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/txtpassword"
+        android:layout_alignParentLeft="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout">
+    <Button
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/LoginBtn"
+        android:layout_alignTop="@+id/signup"
+        android:layout_alignParentStart="true"
+        android:background="#435159"
+        android:textColor="#fff"
+        android:layout_weight="0.5"/>
+
+    <Button
+        android:id="@+id/signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/SignupBtn"
+        android:layout_marginBottom="125dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/login"
+        android:background="#1ab188"
+        android:textColor="#fff"
+        android:layout_weight="0.5"/>
+    </LinearLayout>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Manager?"
+        android:id="@+id/managerCheckBox"
+        android:textColor="#fff"
+        android:checked="false"
+        android:layout_above="@+id/linearLayout"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/txtPhone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Phone Number"
+        android:textColor="#fff"
+        android:layout_below="@+id/password"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:id="@+id/phoneEditText"
+        android:layout_below="@+id/txtPhone"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="#fff"
+        android:hint="Don't fill if already singed up"
+        android:textColorHint="#bfbfbf" />
+
+    <TextView
+        android:id="@+id/emailText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textColor="#fff"
+        android:layout_below="@+id/phoneEditText"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/emailTextBox"
+        android:layout_below="@+id/emailText"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/emailText"
+        android:layout_marginTop="10dp"
+        android:hint="Don't fill if already singed up"
+        android:textColorHint="#bfbfbf"
+        android:textColor="#fff" />
+
+</RelativeLayout>
