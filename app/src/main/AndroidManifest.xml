@@ -38,6 +38,13 @@
             android:label="@string/title_activity_create_team"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity android:name=".ShowTeamsActivity" >
+        </activity>
+        <activity
+            android:name=".TasksActivity"
+            android:label="@string/title_activity_tasks"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

@@ -18,6 +18,7 @@ public class Welcome extends Activity {
     // Declare Variable
     Button logout;
     Button createTeam;
+    Button showTeams;
     boolean isManager;
 
     @Override
@@ -40,14 +41,12 @@ public class Welcome extends Activity {
 
         isManager = currentUser.getBoolean("manager");
 
-        if(isManager == false){
-
-        }
 
         // Locate Button in welcome.xml
         logout = (Button) findViewById(R.id.logout);
 
         createTeam = (Button) findViewById(R.id.createTeamBtn);
+        showTeams = (Button) findViewById(R.id.showTeamsBtn);
 
         // Logout Button Click Listener
         logout.setOnClickListener(new OnClickListener() {
@@ -65,6 +64,16 @@ public class Welcome extends Activity {
                 Intent intent = new Intent(
                         Welcome.this,
                         CreateTeamActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        showTeams.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View arg0) {
+                Intent intent = new Intent(
+                        Welcome.this,
+                        ShowTeamsActivity.class);
                 startActivity(intent);
             }
         });

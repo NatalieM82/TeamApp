@@ -11,10 +11,20 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.parse.Parse;
+import com.parse.ParseCloud;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+import com.parse.SignUpCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +34,9 @@ public class CreateTeamActivity extends AppCompatActivity {
     ArrayList<String> emailList;
     private ArrayAdapter<String> itemsAdapter;
     private ListView lvItems;
+    private Button createTeamBtn;
+    private EditText teamName;
+    ParseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +45,8 @@ public class CreateTeamActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Create a team");
         setSupportActionBar(toolbar);
+
+        currentUser = ParseUser.getCurrentUser();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -44,10 +59,20 @@ public class CreateTeamActivity extends AppCompatActivity {
             }
         });
 
+        createTeamBtn = (Button) findViewById(R.id.createTeam);
+        teamName = (EditText) findViewById(R.id.teamNameEditText);
+
+        createTeamBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                submitTeam();
+            }
+        });
+
         lvItems = (ListView) findViewById(R.id.listView);
         emailList = new ArrayList<String>();
         itemsAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, emailList);
+                R.layout.member_list_item, R.id.memberEmail, emailList);
         lvItems.setAdapter(itemsAdapter);
     }
 
@@ -83,17 +108,65 @@ public class CreateTeamActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-//
-//        listAdapter = new SimpleCursorAdapter(
-//                this,
-//                R.layout.task_view,
-//                cursor,
-//                new String[] { TaskContract.Columns.TASK},
-//                new int[] { R.id.taskTextView},
-//                0
-//        );
-//        this.setListAdapter(listAdapter);
         itemsAdapter.notifyDataSetChanged();
+    }
+
+    private void submitTeam() {
+        String teamNameTxt = teamName.getText().toString();
+        final String[] team_id = new String[1];
+        final ParseObject teamObject = new ParseObject("Team");
+        teamObject.put("TeamName", teamNameTxt);
+        teamObject.put("managerId", currentUser.getObjectId());
+
+        final String sessionToken = currentUser.getSessionToken();
+
+
+
+        teamObject.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    // Saved successfully.
+                    Log.d("Team saved", "User update saved!");
+                    team_id[0] = teamObject.getObjectId();
+
+                    for(int i=0; i<emailList.size() ; i++){
+                        ParseUser user = new ParseUser();
+                        user.setUsername(emailList.get(i));
+                        user.setPassword("1234");
+                        user.setEmail(emailList.get(i));
+                        user.put("manager", false);
+                        user.put("TeamId", teamObject.getObjectId());
+
+                        user.signUpInBackground(new SignUpCallback() {
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    // Show a simple Toast message upon successful registration
+                                    Toast.makeText(getApplicationContext(),
+                                            "Successfully created the list.",
+                                            Toast.LENGTH_LONG).show();
+                                    try {
+                                        ParseUser.become(sessionToken);
+                                    } catch (ParseException e1) {
+                                        e1.printStackTrace();
+                                    }
+
+                                } else {
+                                    Toast.makeText(getApplicationContext(),
+                                            "Team creation Error", Toast.LENGTH_LONG)
+                                            .show();
+                                }
+                            }
+                        });
+                    }
+                } else {
+                    // The save failed.
+                    Log.d("Team saved error", "User update error: " + e);
+                }
+            }
+        });
+
+
     }
 
 }

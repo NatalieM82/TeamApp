@@ -35,17 +35,39 @@
 
 
 
-    <Button
-        android:id="@+id/createTeamBtn"
-        android:layout_width="wrap_content"
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/createTeamBtn"
-        android:background="#435159"
-        android:textColor="#fff"
-        android:layout_weight="0.5"
-        android:layout_above="@+id/logout"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="131dp"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout">
+        <Button
+            android:id="@+id/createTeamBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/createTeamBtn"
+            android:background="#435159"
+            android:textColor="#fff"
+            android:layout_weight="0.5"
+            android:layout_above="@+id/logout"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="131dp"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:id="@+id/showTeamsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/showTeamsBtn"
+            android:layout_marginBottom="125dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@+id/createTeamBtn"
+            android:background="#1ab188"
+            android:textColor="#fff"
+            android:layout_weight="0.5"/>
+    </LinearLayout>
 
 </RelativeLayout>
