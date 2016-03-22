@@ -79,9 +79,11 @@ public class LoginSignupActivity extends Activity {
                                         startActivity(intent);
                                     }
                                     else {
+                                        String team_id = user.getString("TeamId");
                                         Intent intent = new Intent(
                                                 LoginSignupActivity.this,
-                                                TeamMemberWelcome.class);
+                                                TasksActivity2.class);
+                                        intent.putExtra("TEAM_ID", team_id);
                                         startActivity(intent);
                                     }
 

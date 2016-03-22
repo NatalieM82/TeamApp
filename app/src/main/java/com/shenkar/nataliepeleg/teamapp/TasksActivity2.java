@@ -1,8 +1,7 @@
 package com.shenkar.nataliepeleg.teamapp;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +32,7 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TasksActivity extends AppCompatActivity {
+public class TasksActivity2 extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -50,6 +48,7 @@ public class TasksActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+
 
     private Boolean isManager;
     private ParseUser currentUser;
@@ -68,7 +67,7 @@ public class TasksActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tasks);
+        setContentView(R.layout.activity_tasks2);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Tasks");
@@ -81,16 +80,17 @@ public class TasksActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
                 Intent intent = new Intent(
-                        TasksActivity.this,
+                        TasksActivity2.this,
                         NewTaskActivity.class);
                 intent.putExtra("TEAM_ID", team_id);
                 startActivityForResult(intent, GET_TASK_REQUEST);
@@ -127,18 +127,14 @@ public class TasksActivity extends AppCompatActivity {
         isManager = currentUser.getBoolean("manager");
 
         getTasks();
+
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && requestCode == GET_TASK_REQUEST) {
-            getTasks();
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_tasks, menu);
+        getMenuInflater().inflate(R.menu.menu_tasks_activity2, menu);
         return true;
     }
 
@@ -156,12 +152,18 @@ public class TasksActivity extends AppCompatActivity {
 
         if (id == R.id.action_logout) {
             ParseUser.logOut();
-            Intent intent = new Intent(TasksActivity.this,
+            Intent intent = new Intent(TasksActivity2.this,
                     LoginSignupActivity.class);
             startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == GET_TASK_REQUEST) {
+            getTasks();
+        }
     }
 
     public void updateUI() {
@@ -176,7 +178,8 @@ public class TasksActivity extends AppCompatActivity {
         else {
             adapter.clear();
             for(int i=0 ; i<objects.size(); i++){
-                Task task = new Task(objects.get(i).getString("taskText"), objects.get(i).getObjectId(), objects.get(i).getBoolean("done"), objects.get(i).getString("status"));
+                Task task = new Task(objects.get(i).getString("taskText"), objects.get(i).getObjectId(),
+                        objects.get(i).getBoolean("done"), objects.get(i).getString("status"));
                 adapter.add(task);
                 updateUI();
             }
@@ -221,10 +224,6 @@ public class TasksActivity extends AppCompatActivity {
         }
     }
 
-    public TasksAdapter getTaskAdapter(){
-        return adapter;
-    }
-
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -253,9 +252,10 @@ public class TasksActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "Waiting tasks";
                 case 1:
-                    return "SECTION 2";
+                    return "All tasks";
+
             }
             return null;
         }
@@ -278,8 +278,6 @@ public class TasksActivity extends AppCompatActivity {
 
         private ListView listView;
 
-        View rootView;
-
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -291,31 +289,21 @@ public class TasksActivity extends AppCompatActivity {
         public PlaceholderFragment() {
         }
 
-
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-
-//            TasksActivity tasksActivity = new TasksActivity();
-
-            rootView = inflater.inflate(R.layout.fragment_tasks, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_tasks_activity2, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-
-
+//            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
+                textView.setText(adapter.getItems().size() + " Waiting tasks");
+            }
+            else {
+                textView.setText(adapter.getCount() + " Total tasks");
+            }
             listView = (ListView) rootView.findViewById(R.id.tasksListView);
             listView.setAdapter(adapter);
             return rootView;
         }
-//
-//        public void setLists(TasksAdapter adapter){
-//
-//            listView = (ListView) rootView.findViewById(R.id.tasksListView);
-//            listView.setAdapter(adapter);
-//        }
     }
-
-
-
 }

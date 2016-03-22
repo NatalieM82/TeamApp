@@ -40,9 +40,21 @@
         </activity>
         <activity android:name=".ShowTeamsActivity" >
         </activity>
+        <activity android:name=".NewTaskActivity" >
+        </activity>
         <activity
             android:name=".TasksActivity"
             android:label="@string/title_activity_tasks"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".SideBarActivity"
+            android:label="@string/title_activity_side_bar"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".TasksActivity2"
+            android:label="@string/title_activity_tasks2"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>

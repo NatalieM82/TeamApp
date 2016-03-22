@@ -25,12 +25,23 @@ public class MainActivity extends Activity {
         } else {
             // If current user is NOT anonymous user
             // Get current user data from Parse.com
+
             ParseUser currentUser = ParseUser.getCurrentUser();
+            Boolean isManager = currentUser.getBoolean("manager");
             if (currentUser != null) {
-                // Send logged in users to Welcome.class
-                Intent intent = new Intent(MainActivity.this, Welcome.class);
-                startActivity(intent);
-                finish();
+                if (isManager == true) {
+                    Intent intent = new Intent(
+                            MainActivity.this,
+                            Welcome.class);
+                    startActivity(intent);
+                } else {
+                    String team_id = currentUser.getString("TeamId");
+                    Intent intent = new Intent(
+                            MainActivity.this,
+                            TasksActivity2.class);
+                    intent.putExtra("TEAM_ID", team_id);
+                    startActivity(intent);
+                }
             } else {
                 // Send user to LoginSignupActivity.class
                 Intent intent = new Intent(MainActivity.this,

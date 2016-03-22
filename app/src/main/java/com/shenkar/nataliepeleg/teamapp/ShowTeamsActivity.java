@@ -1,9 +1,14 @@
 package com.shenkar.nataliepeleg.teamapp;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -27,6 +32,8 @@ public class ShowTeamsActivity extends AppCompatActivity {
     // Attach the adapter to a ListView
     private ListView listView;
 
+    Button showTeamTasksBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +55,51 @@ public class ShowTeamsActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.teamsListView);
         listView.setAdapter(adapter);
 
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Team t = (Team) adapter.getItem(position);
+//                String team_id = t.getId();
+//                Log.d("show team: ", team_id);
+//                //Go to show tasks activity
+//                Intent intent = new Intent(
+//                        ShowTeamsActivity.this,
+//                        TasksActivity.class);
+//                intent.putExtra("TEAM_ID", team_id);
+//                startActivity(intent);
+//            }
+//        });
+
+//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                Team t = (Team) adapter.getItem(position);
+//                String team_id = t.getId();
+//                Log.d("show team: ", team_id);
+//                //Go to show tasks activity
+//                Intent intent = new Intent(
+//                        ShowTeamsActivity.this,
+//                        TasksActivity.class);
+//                intent.putExtra("TEAM_ID", team_id);
+//                startActivity(intent);
+//                return true;
+//            }
+//        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Team t = (Team) adapter.getItem(position);
+                String team_id = t.getId();
+                Log.d("show team: ", team_id);
+                //Go to show tasks activity
+                Intent intent = new Intent(
+                        ShowTeamsActivity.this,
+                        TasksActivity2.class);
+                intent.putExtra("TEAM_ID", team_id);
+                startActivity(intent);
+            }
+        });
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Team");
         query.whereEqualTo("managerId", user_id);
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -62,6 +114,23 @@ public class ShowTeamsActivity extends AppCompatActivity {
                 }
             }
         });
+
+//        showTeamTasksBtn = (Button) findViewById(R.id.showTeamsBtn);
+//        showTeamTasksBtn.setOnClickListener(new View.OnClickListener() {
+//
+//            public void onClick(View arg0) {
+//                Team t = (Team) adapter.getItem();
+//                String team_id = t.getId();
+//                Log.d("show team: ", team_id);
+//                //Go to show tasks activity
+//                Intent intent = new Intent(
+//                        ShowTeamsActivity.this,
+//                        TasksActivity.class);
+//                intent.putExtra("TEAM_ID", team_id);
+//                startActivity(intent);
+//            }
+//        });
+
     }
 
     private void updateUI() {
@@ -75,4 +144,6 @@ public class ShowTeamsActivity extends AppCompatActivity {
         }
         updateUI();
     }
+
+
 }

@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:id="@+id/teamName"
+        android:id="@+id/taskText"
         android:textSize="20dp"
         android:gravity="center_vertical"
         android:textColor="#fff"
@@ -17,7 +17,6 @@
         android:layout_alignBottom="@+id/editTeamBtn"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,7 +24,7 @@
         android:id="@+id/editTeamBtn"
         android:background="#1ab188"
         android:textColor="#fff"
-        android:onClick="showTeamTasks"
+        android:onClick="showTask"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:layout_alignParentTop="true"
