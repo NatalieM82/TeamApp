@@ -25,7 +25,7 @@
         android:id="@+id/editTeamBtn"
         android:background="#1ab188"
         android:textColor="#fff"
-        android:onClick="showTeamTasks"
+        android:onClick="editTeamMembers"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:layout_alignParentTop="true"

@@ -19,10 +19,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -30,6 +33,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class TasksActivity2 extends AppCompatActivity {
@@ -63,6 +67,11 @@ public class TasksActivity2 extends AppCompatActivity {
     // Create the adapter to convert the array to views
     public static TasksAdapter adapter;
 
+    private Tracker mTracker;
+
+    private static final String TAG = "MainActivity";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +81,11 @@ public class TasksActivity2 extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Tasks");
         setSupportActionBar(toolbar);
+
+        // Obtain the shared Tracker instance.
+        ParseApplication application = (ParseApplication) getApplicationContext();
+        mTracker = application.getDefaultTracker();
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -100,6 +114,13 @@ public class TasksActivity2 extends AppCompatActivity {
         //Tasks adapter and lists
         taskList = new ArrayList<Task>();
         adapter = new TasksAdapter(this, taskList);
+
+//        adapter.sort(new Comparator<Task>() {
+//            @Override
+//            public int compare(Task lhs, Task rhs) {
+//                return lhs.compareTo(rhs);   //or whatever your sorting algorithm
+//            }
+//        });
 
 
 
@@ -147,6 +168,16 @@ public class TasksActivity2 extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(TasksActivity2.this,
+                    SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        if (id == R.id.action_about) {
+            Intent intent = new Intent(TasksActivity2.this,
+                    AboutActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -164,10 +195,26 @@ public class TasksActivity2 extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == GET_TASK_REQUEST) {
             getTasks();
         }
+
+
+
     }
 
     public void updateUI() {
         adapter.notifyDataSetChanged();
+        String name = "Tasks Activity";
+
+        // [START screen_view_hit]
+        Log.i(TAG, "Setting screen name: " + name);
+        mTracker.setScreenName(name);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        // [END screen_view_hit]
+
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Action")
+                .setAction("Watch tasks")
+                .build());
+        // [END custom_event]
     }
 
     public void createTasksList(List<ParseObject> objects){
@@ -179,7 +226,7 @@ public class TasksActivity2 extends AppCompatActivity {
             adapter.clear();
             for(int i=0 ; i<objects.size(); i++){
                 Task task = new Task(objects.get(i).getString("taskText"), objects.get(i).getObjectId(),
-                        objects.get(i).getBoolean("done"), objects.get(i).getString("status"));
+                        objects.get(i).getBoolean("done"), objects.get(i).getString("status"), objects.get(i).getString("dueTo"));
                 adapter.add(task);
                 updateUI();
             }
@@ -222,6 +269,34 @@ public class TasksActivity2 extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public void showTask(View view){
+        View v = (View) view.getParent();
+
+        View parentRow = (View) view.getParent();
+        ListView listView = (ListView) parentRow.getParent();
+        final int position = listView.getPositionForView(parentRow);
+
+        Task t = (Task) adapter.getItem(position);
+        String task_id = t.getId();
+
+        if(isManager){
+            Intent intent = new Intent(
+                    TasksActivity2.this,
+                    NewTaskActivity.class);
+            intent.putExtra("TASK_ID", task_id);
+            intent.putExtra("TEAM_ID", team_id);
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(
+                    TasksActivity2.this,
+                    TaskReportActivity.class);
+            intent.putExtra("TASK_ID", task_id);
+            startActivity(intent);
+        }
+
     }
 
 
@@ -290,7 +365,7 @@ public class TasksActivity2 extends AppCompatActivity {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+        public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_tasks_activity2, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
@@ -303,6 +378,22 @@ public class TasksActivity2 extends AppCompatActivity {
             }
             listView = (ListView) rootView.findViewById(R.id.tasksListView);
             listView.setAdapter(adapter);
+
+//            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> parent, View view,
+//                                        int position, long id) {
+//                    Task t = (Task) adapter.getItem(position);
+//                    String task_id = t.getId();
+//                    Log.d("show task: ", task_id);
+//                    //Go to show tasks activity
+//                    Intent intent = new Intent(
+//                            container.getContext(),
+//                            TaskReportActivity.class);
+//                    intent.putExtra("TASK_ID", task_id);
+//                    startActivity(intent);
+//                }
+//            });
             return rootView;
         }
     }

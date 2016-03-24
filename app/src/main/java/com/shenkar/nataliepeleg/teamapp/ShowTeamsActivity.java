@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -133,6 +136,46 @@ public class ShowTeamsActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_tasks_activity2, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(ShowTeamsActivity.this,
+                    SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        if (id == R.id.action_about) {
+            Intent intent = new Intent(ShowTeamsActivity.this,
+                    AboutActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        if (id == R.id.action_logout) {
+            ParseUser.logOut();
+            Intent intent = new Intent(ShowTeamsActivity.this,
+                    LoginSignupActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void updateUI() {
         adapter.notifyDataSetChanged();
     }
@@ -143,6 +186,22 @@ public class ShowTeamsActivity extends AppCompatActivity {
             adapter.add(team);
         }
         updateUI();
+    }
+
+    public void editTeamMembers(View view){
+        View v = (View) view.getParent();
+
+        View parentRow = (View) view.getParent();
+        ListView listView = (ListView) parentRow.getParent();
+        final int position = listView.getPositionForView(parentRow);
+
+        Team t = (Team) adapter.getItem(position);
+        String team_id = t.getId();
+
+        Intent intent = new Intent(ShowTeamsActivity.this,
+                CreateTeamActivity.class);
+        intent.putExtra("TEAM_ID", team_id);
+        startActivity(intent);
     }
 
 

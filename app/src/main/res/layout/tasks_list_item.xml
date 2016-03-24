@@ -20,8 +20,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edit"
-        android:id="@+id/editTeamBtn"
+        android:text="Watch"
+        android:id="@+id/watchTaskBtn"
         android:background="#1ab188"
         android:textColor="#fff"
         android:onClick="showTask"

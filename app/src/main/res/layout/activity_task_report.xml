@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.shenkar.nataliepeleg.teamapp.TaskReportActivity"
+    android:background="#24313c">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/taskText"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="#fff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Category:"
+        android:id="@+id/categoryTextView"
+        android:layout_below="@+id/taskText"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="27dp"
+        android:textColor="#ededed" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chosenCategory"
+        android:layout_alignTop="@+id/categoryTextView"
+        android:layout_toEndOf="@+id/categoryTextView"
+        android:layout_marginStart="22dp"
+        android:textColor="#fff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Priority:"
+        android:id="@+id/priorityTextView"
+        android:layout_below="@+id/categoryTextView"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="22dp"
+        android:textColor="#ededed" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chosenPriority"
+        android:layout_alignTop="@+id/priorityTextView"
+        android:layout_alignStart="@+id/chosenCategory"
+        android:textColor="#fff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location:"
+        android:id="@+id/locationTextView"
+        android:layout_below="@+id/priorityTextView"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="27dp"
+        android:textColor="#ededed" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chosenLocation"
+        android:layout_alignBottom="@+id/locationTextView"
+        android:layout_alignStart="@+id/chosenPriority"
+        android:textColor="#fff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Due to:"
+        android:id="@+id/dueTextview"
+        android:layout_below="@+id/locationTextView"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="27dp"
+        android:textColor="#ededed" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chosenDue"
+        android:textColor="#fff"
+        android:layout_alignBottom="@+id/dueTextview"
+        android:layout_alignTop="@+id/dueTextview"
+        android:layout_alignStart="@+id/chosenLocation" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/taskFirstActionBtns"
+        android:layout_below="@+id/dueTextview"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="74dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WAITING"
+            android:id="@+id/waitingBtn"
+            android:onClick="okClicked"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/button"
+            android:background="#435159"
+            android:textColor="#fff"
+            android:layout_weight="0.3"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ACCEPT"
+            android:id="@+id/acceptBtn"
+            android:onClick="okClicked"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/button"
+            android:background="#1ab188"
+            android:textColor="#fff"
+            android:layout_weight="0.31"/>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="REJECT"
+            android:id="@+id/rejectBtn"
+            android:onClick="cancel"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:textColor="#fff"
+            android:background="#FB6668"
+            android:layout_weight="0.50"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/taskSecondActionsBtns"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/taskFirstActionBtns"
+        android:layout_alignParentRight="true">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WAITING"
+            android:id="@+id/waitingBtn2"
+            android:onClick="okClicked"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/button"
+            android:background="#435159"
+            android:textColor="#fff"
+            android:layout_weight="0.3"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IN PROGRESS"
+            android:id="@+id/inProgressBtn"
+            android:onClick="okClicked"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/button"
+            android:background="#1ab188"
+            android:textColor="#fff"
+            android:layout_weight="0.3"/>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DONE"
+            android:id="@+id/doneBtn"
+            android:onClick="cancel"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:textColor="#fff"
+            android:background="#C88D4A"
+            android:layout_weight="0.50"/>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

@@ -176,8 +176,8 @@ public class TasksActivity extends AppCompatActivity {
         else {
             adapter.clear();
             for(int i=0 ; i<objects.size(); i++){
-                Task task = new Task(objects.get(i).getString("taskText"), objects.get(i).getObjectId(), objects.get(i).getBoolean("done"), objects.get(i).getString("status"));
-                adapter.add(task);
+//                Task task = new Task(objects.get(i).getString("taskText"), objects.get(i).getObjectId(), objects.get(i).getBoolean("done"), objects.get(i).getString("status"));
+//                adapter.add(task);
                 updateUI();
             }
         }
