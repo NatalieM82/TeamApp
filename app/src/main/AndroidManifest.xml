@@ -62,22 +62,37 @@
         <activity android:name=".AboutActivity" >
         </activity>
 
-        <receiver android:enabled="true" android:name="com.google.android.gms.analytics.AnalyticsReceiver">
+        <receiver
+            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
+            android:enabled="true" >
             <intent-filter>
                 <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
             </intent-filter>
         </receiver>
-        <service android:enabled="true" android:exported="false" android:name="com.google.android.gms.analytics.AnalyticsService" />
 
-        <receiver android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
-            android:enabled="true">
+        <service
+            android:name="com.google.android.gms.analytics.AnalyticsService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <receiver
+            android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
+            android:enabled="true" >
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
-        <service android:name="com.google.android.gms.analytics.CampaignTrackingService"
+
+        <service
+            android:name="com.google.android.gms.analytics.CampaignTrackingService"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
+
+        <activity
+            android:name=".TaskActivity3"
+            android:label="@string/title_activity_task3"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

@@ -202,6 +202,7 @@ public boolean onCreateOptionsMenu(Menu menu) {
 
     private void submitTeam() {
         String teamNameTxt = teamName.getText().toString();
+        if (teamNameTxt.equals("")) return;
         final String[] team_id = new String[1];
         final ParseObject teamObject = new ParseObject("Team");
         teamObject.put("TeamName", teamNameTxt);
@@ -325,7 +326,7 @@ public boolean onCreateOptionsMenu(Menu menu) {
         emailIntent.putExtra(Intent.EXTRA_TEXT, "Hi\n" +
                 "You have been invited to be a team member in an TeamApp Team created by me.\n" +
                 "Use this link to download and install the App from Google Play.\n" +
-                "<LINK to Google Play download>\n\n" +
+                "https://play.google.com/store/apps/details?id=com.shenkar.nataliepeleg.teamapp\n\n" +
                 "Username will be your email address and password: 1234");
 
         try {

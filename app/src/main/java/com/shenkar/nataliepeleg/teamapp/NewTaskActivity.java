@@ -52,6 +52,7 @@ public class NewTaskActivity extends AppCompatActivity implements AdapterView.On
 
     private Task currentTask;
     private EditText descEt;
+    private TextView taskStatus;
     private int isDone = 0;   //0 no , 1 yes
 
 
@@ -237,6 +238,9 @@ public class NewTaskActivity extends AppCompatActivity implements AdapterView.On
                 public void done(List<ParseObject> objects, ParseException e) {
                     if (e == null) {
                         Log.d("Task:", objects.toString());
+                        taskStatus = (TextView) findViewById(R.id.taskStatus);
+                        taskStatus.setText(objects.get(0).getString("status"));
+
                         descEt.setText(objects.get(0).getString("taskText"));
                         int categorySpinnerPosition = categoriesAdapter.getPosition(objects.get(0).getString("category"));
                         categorySpinner.setSelection(categorySpinnerPosition);
@@ -278,6 +282,10 @@ public class NewTaskActivity extends AppCompatActivity implements AdapterView.On
             });
 
 
+        }
+        else {
+            taskStatus = (TextView) findViewById(R.id.taskStatus);
+            taskStatus.setVisibility(View.INVISIBLE);
         }
 
     }

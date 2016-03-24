@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
                     String team_id = currentUser.getString("TeamId");
                     Intent intent = new Intent(
                             MainActivity.this,
-                            TasksActivity2.class);
+                            TaskActivity3.class);
                     intent.putExtra("TEAM_ID", team_id);
                     startActivity(intent);
                 }

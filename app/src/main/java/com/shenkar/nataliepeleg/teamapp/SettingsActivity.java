@@ -10,6 +10,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -44,6 +45,7 @@ import java.util.List;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class SettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    private long taskRetrieving = 900000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +73,15 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         // attaching data adapter to spinner
         minutesSpinner.setAdapter(minutesAdapter);
 
-
+//        final Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            public void run() {
+//                Toast.makeText(getApplicationContext(),
+//                        "Showing text", Toast.LENGTH_LONG)
+//                        .show();
+//                handler.postDelayed(this, taskRetrieving); //now is every 2 minutes
+//            }
+//        }, taskRetrieving); //Every 120000 ms (2 minutes)
     }
 
     @Override
@@ -81,6 +91,24 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
 
         // Showing selected spinner item
         Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+//        switch (item){
+//            case "15":{
+//                taskRetrieving = 900000;
+//                break;
+//            }
+//            case "30":{
+//                taskRetrieving = 1800000;
+//                break;
+//            }
+//            case "45":{
+//                taskRetrieving = 2700000;
+//                break;
+//            }
+//            case "60":{
+//                taskRetrieving = 3600000;
+//                break;
+//            }
+//        }
     }
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub

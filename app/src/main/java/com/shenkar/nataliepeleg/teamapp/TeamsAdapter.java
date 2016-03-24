@@ -24,11 +24,11 @@ public class TeamsAdapter extends ArrayAdapter<Team> {
         // Get the data item for this position
         Team team = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
-        if (convertView == null) {
+//        if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.teams_list_item, parent, false);
-        }
+
         // Lookup view for data population
-        TextView tvName = (TextView) convertView.findViewById(R.id.teamName);
+        TextView tvName = (TextView) convertView.findViewById(R.id.teamNameList);
         // Populate the data into the template view using the data object
         tvName.setText(team.name);
 //        Button btnNxt = (Button) findViewById(R.id.btnNext);

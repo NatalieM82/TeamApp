@@ -12,6 +12,8 @@ import com.parse.ParseACL;
 import com.parse.ParseUser;
 
 import android.app.Application;
+import android.os.Handler;
+import android.widget.Toast;
 
 public class ParseApplication extends Application {
 
@@ -31,6 +33,8 @@ public class ParseApplication extends Application {
         defaultACL.setPublicReadAccess(true);
 
         ParseACL.setDefaultACL(defaultACL, true);
+
+
     }
 
     /**

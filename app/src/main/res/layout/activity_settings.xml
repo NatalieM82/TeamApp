@@ -20,7 +20,8 @@
         android:id="@+id/minutesSpinner"
         android:layout_gravity="center_horizontal"
         android:background="#435159"
-        android:spinnerMode="dialog" />
+        android:spinnerMode="dialog"
+        android:textAlignment="center" />
 
     <TextView
         android:layout_width="wrap_content"

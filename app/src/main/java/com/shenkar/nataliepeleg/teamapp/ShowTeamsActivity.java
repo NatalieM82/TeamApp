@@ -97,7 +97,7 @@ public class ShowTeamsActivity extends AppCompatActivity {
                 //Go to show tasks activity
                 Intent intent = new Intent(
                         ShowTeamsActivity.this,
-                        TasksActivity2.class);
+                        TaskActivity3.class);
                 intent.putExtra("TEAM_ID", team_id);
                 startActivity(intent);
             }
@@ -182,6 +182,7 @@ public class ShowTeamsActivity extends AppCompatActivity {
 
     private void createTeamsList(List<ParseObject> objects){
         for(int i=0 ; i<objects.size(); i++){
+            if (objects.get(i).getString("TeamName").equals("") ||objects.get(i).getString("TeamName") == null ) continue;
             Team team = new Team(objects.get(i).getString("TeamName"), objects.get(i).getObjectId());
             adapter.add(team);
         }
